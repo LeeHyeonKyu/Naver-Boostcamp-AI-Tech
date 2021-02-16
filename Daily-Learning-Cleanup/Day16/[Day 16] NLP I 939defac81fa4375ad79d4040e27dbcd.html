@@ -1,0 +1,661 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[Day 16] NLP I</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5a7d2f8d-3e7d-4516-a4d2-71e9122ccc57" class="page sans"><header><img class="page-cover-image" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/boostcamp.jpg" style="object-position:center 90.9%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">📄</span></div><h1 class="page-title">[Day 16] NLP I</h1></header><div class="page-body"><nav id="3b6502bf-387e-4c40-9aa2-678f9e33f6d4" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9c858b16-ccfc-4465-b33d-1fcb5b07cee2">(1강) Intro to NLP, Bag-of-Words</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9cadba89-39dd-4106-841d-5fa8e2cac1b0">NLP의 Task와 구분</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7f2f2c46-b91e-4f0f-8dc6-ade1ad5598d5">Trends of NLP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#21fa0897-7f40-494a-8d14-76b4f71844e7">Bag of Words</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7d3a9d26-5640-46e7-b3b2-505851758c85">Naive Bayes Classifier</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ded37c50-5936-4b52-a170-417d6799878b">실습</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1a876f28-f8dd-4085-9327-6c4a44a7816a">(2강) Word Embedding</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#efbcbf01-cce1-404b-aede-837ddd368aa1">What is Word Embedding?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cc993832-69db-4365-b4c8-1d42019baedc">Word2Vec</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#85fd22c6-8854-4b44-9a16-359c1c6c9741">Word Embedding의 특징</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a293b751-173e-4ce4-b603-03da8b7eb6dd">GloVe</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f4cd5b45-6429-4f1b-801f-bea04e38664b">실습</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e3a39582-6ff0-40d2-9599-000ddfd18508">Reference</a></div></nav><hr id="1f697a6d-f9cd-4dfb-b223-b14ec206393f"/><h2 id="9c858b16-ccfc-4465-b33d-1fcb5b07cee2" class="">(1강) Intro to NLP, Bag-of-Words</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="01fe771e-3d88-4b9a-ac1e-8be549665dee"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">자연어 처리(NLP)와 관련된 동향을 파악하고, Bag-of-Words와 Naive Bayes Classifier에 대해 알아본다.</div></figure><p id="7b7efe19-6002-4b5d-a170-1087c155f055" class="">
+</p><h3 id="9cadba89-39dd-4106-841d-5fa8e2cac1b0" class="">NLP의 Task와 구분</h3><p id="e618694c-cb66-445f-ae74-6e522c450a55" class="">NLP는 현재 딥러닝에서 가장 활발히 다뤄지고 있는 분야로, 다양한 기준에 구분할 수 있다.</p><p id="ca287db4-54de-40e9-b834-44072ccff96c" class="">Task를 기준으로 크게 분류하자면, 다음과 같다.</p><ul id="250631db-d3b8-4b81-80b6-2885c64983e6" class="bulleted-list"><li><strong>Natural Language Understanding (NLU)</strong> : Computer에 인간의 언어를 이해시키는 작업</li></ul><ul id="d22d491d-e14d-43b3-850f-5a71b641d8d7" class="bulleted-list"><li><strong>Natural Language Generation (NLG) </strong>: Computer가 적절한 인간의 언어를 생성해내는 작업</li></ul><p id="00c978db-1914-4c34-8838-28c13aee6aa9" class="">학문적 연구 분야를 기준으로 분류하면 다음과 같다.</p><ul id="bb957719-bf54-42b6-8b1c-6bfbd7d01a7d" class="bulleted-list"><li><strong>Natural Language Processing (NLP)</strong></li></ul><ul id="f76507d5-6049-402c-bf70-6750639a3dd1" class="bulleted-list"><li><strong>Text Mining</strong></li></ul><ul id="6dd7b284-20d1-41d5-9785-c3f43b90de60" class="bulleted-list"><li><strong>Information Retrieval</strong></li></ul><p id="8ccb06b1-4c2b-431a-8b8a-769d606d8afb" class="">학문적 연구 분야를 기준으로 세부적인 Task를 살펴보자.</p><p id="d5790b37-382e-4116-b0db-e22da3ca7af2" class="">
+</p><p id="f8edc650-6a7f-468d-941f-7448cc8c409d" class=""><strong>NLP</strong>는 아래와 같은 세부 Task를 가진다. 이외에도 많은 Task가 있으며, 다른 분야보다 더 활발하게 연구되고 있는 분야이다.</p><ul id="e6d777f0-022b-401e-8eb0-13a6ff628113" class="bulleted-list"><li><strong>Tokenization </strong>: 일정한 규칙에 따라 문장을 단어로 Parsing 하는 작업</li></ul><ul id="7f43c247-315f-4fb6-99db-be43eb4abd6e" class="bulleted-list"><li><strong>Stemming </strong>: 단어의 의미와 어근을 구별하는 작업
+<em>(ex. &#x27;맑다&#x27;, &#x27;맑은&#x27;, &#x27;맑고&#x27; 등)</em></li></ul><ul id="eee1f6a0-8e55-464c-8915-0b6b1975eea8" class="bulleted-list"><li><strong>Named Entity Recognition (NER) </strong>: 고유명사를 인식하는 작업
+<em>(ex. &#x27;The New York Times&#x27; 등)</em></li></ul><ul id="e18a2a81-9890-4078-aca2-42b9ce0e593d" class="bulleted-list"><li><strong>Part-of-Speech (POS) Tagging</strong> : 단어의 품사나 성분을 인식하는 작업</li></ul><ul id="81fc8f8d-7793-41bb-aef0-2278c42447ce" class="bulleted-list"><li><strong>Sentiment Analysis</strong> : 문장이나 글의 감정을 분석하는 작업</li></ul><ul id="572e2d9f-9d13-470f-9309-5a80bd22bfb7" class="bulleted-list"><li><strong>Machine Translation</strong> : 기계를 통해 문장이나 글을 번역하는 작업</li></ul><ul id="40f05067-7cc7-4a4c-8dd5-edbf89b81a1a" class="bulleted-list"><li><strong>Entailment Prediction</strong> : 문장 간 논리 구조를 예측하는 등의 작업</li></ul><ul id="cc367321-fae8-40a0-8a93-0406be6c958d" class="bulleted-list"><li><strong>Question Answering</strong> : 질문을 이해하고 관련된 정보를 제공하는 작업
+<em>(ex. &#x27;나폴레옹이 죽은날은?&#x27; 등)</em></li></ul><ul id="4059cc71-be0b-4de1-b188-025812a1e6da" class="bulleted-list"><li><strong>Dialog Systems</strong> : 챗봇과 같이 대화를 이해하고 생성하는 작업</li></ul><ul id="fadfd4a2-9fdb-4650-b52c-c3caa0dbf023" class="bulleted-list"><li><strong>Summarization </strong>: 글이나 다수의 문장을 핵심적인 내용으로 요악하는 작업</li></ul><p id="2af41d59-e542-45b7-8c23-ea2797e2dfc0" class="">
+</p><p id="221c8f07-f47f-41ea-90fe-3a8e84a2d815" class=""><strong>Text Mining</strong>은 아래와 같은 세부 Task를 가진다. 이 분야는 사회현상에 대한 분석 등과 밀접한 관계를 가진다.</p><ul id="3669065c-b723-4fc0-8898-60ba352dbc42" class="bulleted-list"><li><strong>Extract Useful Information</strong> : 웹과 같은 방대한 정보 속에서 유의미한 정보를 추출하는 작업
+<em>(ex.  뉴스 분석, 소비자 반응 분석 등)</em></li></ul><ul id="fe1b7f9e-c1e0-46bb-96e5-15a8b5154633" class="bulleted-list"><li><strong>Document Clustering</strong> : 글을 일정한 Class로 분류하거나 비슷한 글끼리 묶는 작업</li></ul><p id="9f54c0ff-8b7e-44ff-8349-c292641d0228" class="">
+</p><p id="3c13bb2a-c151-4dc3-8309-8064e50b9f9d" class=""><strong>Information Retrieval</strong>은 검색 기술을 연구하는 분야로 현대에는 검색 기술과 성능이 성숙기에 이르렀다고 판단한다. 이와 관련된 세부 분야로서 추천 기술이 활용되고 있다.</p><ul id="7f3d4f05-bac7-42ac-87c4-9ebda9638f72" class="bulleted-list"><li><strong>Recommendation Systems</strong> : 사용자의 정보를 통해 선제적으로 정보를 제공하는 작업
+<em>(ex. Youtube 영상 추천 기능 등)</em></li></ul><p id="2c6df901-29f6-414d-9c88-6becf6b315b1" class="">
+</p><h3 id="7f2f2c46-b91e-4f0f-8dc6-ade1ad5598d5" class="">Trends of NLP</h3><p id="025d65cd-86a9-457f-b162-67d8a6d99cd1" class="">현대의 기계학습은 <strong>Computer Vision</strong> 분야와 <strong>NLP </strong>분야가 활발히 연구되고 있다. CV는 CNN과 GAN 등으로 인해 폭발적인 성장을 이루고 있다. NLP는 다음과 같은 Trend로 발전해나가고 있다.</p><p id="72234f05-28b1-4113-abc7-ce2bcde7026d" class="">자연어는 그 자체로는 기계가 이해할 수 없고, 단어의 순서에 따라 의미가 바뀌는 특징을 가진다. 이에 따라, <strong>Embedding</strong>과  <strong>Sequential Data</strong>의 처리가 주된 관건이었다.</p><p id="a64ae6ae-af66-4ac6-9f52-af33e1b6ac26" class=""><strong>RNN (LSTM, GRU)</strong>과 같은 모델의 등장으로 Sequential Data를 처리할 수 있게 되었고, 더 나아가 <strong>Transformer </strong>모델의 등장으로 큰 발전을 이루어 냈다. Transformer이전에는 각 Task에 특화된 모델이 따로 존재했었으나, 근래에는 Transformer의 구조를 이용한 모델이 이를 대체하고 있다.</p><p id="31dd16e5-aa6a-4423-8cf9-55623437127c" class=""><strong>Self Attention</strong>구조와 <strong>Self Learning</strong>을 통해 수 많은 데이터를 이미 학습한 <strong>Pre-trained </strong>모델도 등장했다. <strong>Bert</strong>와 <strong>GPT-X</strong> 모델은 필요한 Task의 데이터를 전이학습하여 어디서든 좋은 성능을 낼 수 있도록 개발되었다.</p><p id="70e3a90c-cd06-4b95-905e-f7d3b04ffdbc" class="">
+</p><h3 id="21fa0897-7f40-494a-8d14-76b4f71844e7" class="">Bag of Words</h3><p id="bb5f88d1-5519-436b-b4c4-665dc6a1e34e" class="">Bag of Words는 딥러닝 기술 이전에 적용되었던 Embedding 기술로 단어를 숫자나 벡터로 표현하는 기법이다. 단, <strong>Bag of Words로 표현된 모든 단어는 다른 단어 간의 거리가 모두 </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.13278em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.90722em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord">2</span></span></span><span style="top:-2.86722em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.13278em;"><span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></strong><strong>이며, Cosine 유사도는 0이다.</strong></p><p id="b768b141-c3f6-4c44-a1cc-9702ae72588e" class="">
+</p><p id="55584421-1fa3-4b30-ba72-4f310e28e3fe" class="">알고리즘의 순서와 예시는 다음과 같다.</p><ol id="ed725aee-799f-40ae-8a8d-b3649de66ade" class="numbered-list" start="1"><li>먼저, 문장에서 나타난 단어들의 집합을 구한다.</li></ol><ol id="ab2d7522-619a-4e3a-99c3-f6d1e05e3f14" class="numbered-list" start="2"><li>각 단어를 One Hot Encoding하여 벡터로 표현한다.</li></ol><ol id="c592d0c4-5512-45b2-afb4-015b06dd532c" class="numbered-list" start="3"><li>각 단어를 표현하는 벡터의 합을 통해 문장을 표현한다.</li></ol><figure id="939defac-81fa-4375-ad79-d4040e27dbcd" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled.png"><img style="width:593px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled.png"/></a><figcaption>중복단어는 집합의 성질에 의해 1개만 남게 된다. </figcaption></figure><figure id="a40996c7-172f-4df5-8573-91b8d9fdc8de" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%201.png"><img style="width:576px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%201.png"/></a><figcaption>단어의 갯수만큼의 차원이 생기고, 각 차원에 해당하는 값만 1인 One Hot Vector로 표현된다.</figcaption></figure><figure id="5ce2d3a9-87dd-43bf-bdd1-753b158b3a22" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%202.png"><img style="width:576px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%202.png"/></a><figcaption>각 문장은 단어의 합으로 표현되나, 순서에 대한 표현은 불가능하다.</figcaption></figure><p id="a17295e7-1665-4bf5-884c-249101445f7c" class="">
+</p><h3 id="7d3a9d26-5640-46e7-b3b2-505851758c85" class="">Naive Bayes Classifier</h3><p id="44c993c4-c5a9-4630-8c6a-17889709cbca" class="">Bag of Words를 이용해 <strong>Naive Bayes Classifier</strong>를 구현할 수 있다. 각 문장이 어떤 Class에 속하는지에 대한 Task를 수행할 수 있으며, 이는 조건부확률과 <strong>Bayesian Rule</strong>에 따라 필요한 모든 Parameter를 모두 추정할 수 있다.</p><p id="b5b0400f-819e-4dc5-8f40-85a71218f6fa" class="">문장 혹은 글인 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span></span><span>﻿</span></span>가 어떤 Class <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span></span><span>﻿</span></span>에 속하는지 알고 싶을 때 다음과 같이 정리할 수 있다.</p><figure id="0c2ec0fc-fa16-4d32-ab75-96e6366271dd" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%203.png"><img style="width:593px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%203.png"/></a><figcaption><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(d)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>는 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>r</mi><mi>g</mi><mi>m</mi><mi>a</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">argmax</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span></span></span></span></span><span>﻿</span></span> 함수 내에서 무시될 수 있기 때문에, 마지막과 같이 정리된다.</figcaption></figure><p id="d1d1dddb-62d2-4243-9573-026346b40421" class="">문장 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span></span><span>﻿</span></span>는 각각의 단어 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>로 이루어져 있기 때문에 동시사건으로 이해할 수 있다. 또한, 각 단어는 독립사건이기 때문에 다음과 같이 정리될 수 있다.</p><figure id="b998171d-d62a-4617-a839-94254a3498bd" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%204.png"><img style="width:587px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%204.png"/></a><figcaption>한 Class <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span></span><span>﻿</span></span>가 주어졌을 때, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>가 동시에 발견될 확률값으로 계산되며 이 값이 가장 큰 Class로 분류된다.</figcaption></figure><p id="790d9cb2-c9cc-4dcb-bf7a-75280fd525b9" class="">
+</p><h3 id="ded37c50-5936-4b52-a170-417d6799878b" class="">실습</h3><figure id="eb3f3654-fa33-4cb8-bc41-23346bd311e5"><a href="https://github.com/LeeHyeonKyu/Naver-Boostcamp-AI-Tech/blob/main/Daily-Learning-Cleanup/210215_naive_bayes.ipynb" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">LeeHyeonKyu/Naver-Boostcamp-AI-Tech</div><div class="bookmark-description">네이버 부스트캠프 AI Tech에 참여한 내용입니다. Contribute to LeeHyeonKyu/Naver-Boostcamp-AI-Tech development by creating an account on GitHub.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/LeeHyeonKyu/Naver-Boostcamp-AI-Tech/blob/main/Daily-Learning-Cleanup/210215_naive_bayes.ipynb</div></div><img src="https://avatars.githubusercontent.com/u/72373733?s=400&amp;v=4" class="bookmark-image"/></a></figure><p id="d20b63dc-b3ea-4791-b6b9-5b8ef3ac9d7e" class="">
+</p><hr id="9981272c-26c7-4099-bde9-ff9ed5306094"/><h2 id="1a876f28-f8dd-4085-9327-6c4a44a7816a" class="">(2강) Word Embedding</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e8a2c798-b500-4e83-bcda-432aa55440f1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">여러 차원의 값을 갖는 Vector로 단어를 표현하는 Word2Vec과 GloVe에 대해 알아본다.</div></figure><p id="8ea2b305-8768-44a7-863d-4f5685310e16" class="">
+</p><h3 id="efbcbf01-cce1-404b-aede-837ddd368aa1" class="">What is Word Embedding?</h3><p id="6d7ce7fd-538b-43fc-811c-876bb1962eca" class=""><strong>Word Embedding</strong>은 단어의 의미를 고려하여 Vector의 형태로 표현하는 것을 의미한다. 이는 Deep Learning의 <strong>학습을 기반으로 한다.</strong> 주어진 Text를 학습 데이터로 사용해 학습하므로써 Embedding Vector를 만들어낸다.</p><p id="7a94af4a-31b4-45e4-8c14-958b336abd69" class="">Word Embedding은 각각의 단어를 특정한 차원의 점으로 표현하는 것이며,<strong> 단어의 의미에 따라 벡터 공간에서의 거리가 다르도록 표현하는 방식이다</strong>. 동일한 위치에 표현되는 단어나, 단어와 함께 등장하는 다른 단어는 관계가 있다는 것을 가정으로 한다.</p><figure id="ea986f3f-7341-446e-8828-8d9c955f0db0" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%205.png"><img style="width:336px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%205.png"/></a><figcaption>&#x27;Cat&#x27;과 같이 등장한 단어들은 &#x27;Cat&#x27;과 관계를 가질 것이다.</figcaption></figure><figure id="369dec56-434c-4da3-bb9c-d4325e032e22" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%206.png"><img style="width:336px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%206.png"/></a><figcaption>&#x27;Cat&#x27;과 &#x27;Kitty&#x27;는 유사한 단어와 등장하므로 유사한 의미이며, 벡터 공간 상에서 가깝게 표현될 것이다.</figcaption></figure><p id="bb86127e-8c3d-42ac-ae13-d9cc98dddbd8" class="">
+</p><h3 id="cc993832-69db-4365-b4c8-1d42019baedc" class="">Word2Vec</h3><p id="6024b8bb-9d96-4ca2-88ce-dda362078423" class="">Word2Vec의 기본 아이디어는 다음 사진과 같다.</p><figure id="4623339d-e523-4dc4-a6af-6c0d9708ef7b" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%207.png"><img style="width:598px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%207.png"/></a><figcaption>&#x27;Cat&#x27;과 자주 등장하는 단어들은 &#x27;Cat&#x27;과 관계를 가지고, 앞으로도 같이 등장 할 확률이 높을 것이다.</figcaption></figure><p id="ccc72199-fa83-4d9f-9d56-749a22b69082" class="">Word2Vec의 알고리즘은 다음과 같은 순서로 동작한다.</p><ol id="7e7e3466-8fab-44a7-ba44-74e0f3173bf3" class="numbered-list" start="1"><li>문장이 주어진다.</li></ol><ol id="df33b8bd-e9b1-4764-b509-bcef65033b7f" class="numbered-list" start="2"><li>문장에서 등장한 각 단어를 <strong>One Hot Encoding</strong> 한다.</li></ol><ol id="273246f3-769a-4b29-97ba-6c4d4a874e1d" class="numbered-list" start="3"><li>앞에 등장한 단어를 <strong>X</strong>(입력 데이터)로, 뒤에 등장한 단어를 <strong>y</strong>(정답 데이터)로 학습 데이터를 구성한다.</li></ol><ol id="d8471ce4-5a9c-48a0-8ad2-3c220da3e7cb" class="numbered-list" start="4"><li>X를 입력으로 하여 두 번의 선형변환을 거쳐 y를 추론할 수 있도록 <strong>학습</strong>한다.</li></ol><ol id="34d107b3-80e2-4f3c-9f15-67aaac5983e9" class="numbered-list" start="5"><li>학습 된 가중치 <strong>W</strong>를 <strong>Embedding Vector</strong>로 사용한다.</li></ol><figure id="feff4bf4-258c-43f1-9cb4-6a5e3a749ea1" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%208.png"><img style="width:599px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%208.png"/></a><figcaption>통상 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>W</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">W_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> 행렬을 전치하여, 각 입력 단어의 Embedding Vector로 사용한다.</figcaption></figure><p id="9da4ebd9-666e-42b3-b80b-459a8e5c4b83" class="">
+</p><h3 id="85fd22c6-8854-4b44-9a16-359c1c6c9741" class="">Word Embedding의 특징</h3><p id="3969aff9-5f18-44c0-87d3-33ac3582de41" class="">위와 같이 표현된 Embedding Vector는 다른 단어와의 관계를 통해서 다른 정보를 표현할 수 있다.</p><p id="5b12bf34-b8fc-4558-a0c7-f03d38bf144b" class="">예를 들어, Embedding Vector로 표현된 <strong>&#x27;삼촌&#x27;과 &#x27;이모&#x27;</strong>라는 단어의 차이는<strong> &#x27;왕&#x27;과 &#x27;여왕&#x27;</strong>이라는 단어의 차이와 유사하다. 즉, <strong>벡터 간의 연산을 통해 특정한 정보를 표현</strong>할 수 있는 것이다.</p><figure id="3fb63f2b-50ca-48c8-9772-5b0511df0ac9" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%209.png"><img style="width:520px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%209.png"/></a><figcaption>Vector의 연산을 통해 내포되어 있는 의미를 표현할 수 있다.</figcaption></figure><figure id="d8c1520c-1235-45a1-bdeb-2b205221c269" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2010.png"><img style="width:528px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2010.png"/></a><figcaption>GloVe로 Embedding한 결과도 동일하다.</figcaption></figure><p id="4bbc0dde-56fe-4cc1-aa10-54bd0c6ff017" class="">
+</p><p id="d107266d-b9a0-49db-bd3c-8c99791e83c2" class="">이와 같은 특징을 통해서 Word Embedding은 NLP의 다양한 Task에서 활용되고 있다.</p><figure id="dc8d26b6-a3ec-4508-8cf1-3c8935063e8b" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2011.png"><img style="width:1083px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2011.png"/></a><figcaption>Machine Translation은 Embedded Word를 입력으로 받아 높은 성능을 내고 있다.</figcaption></figure><figure id="c709f8ba-5982-47f2-a33e-29abac0a0261" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2012.png"><img style="width:1079px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2012.png"/></a><figcaption>Embedded Word은 단어의 의미가 긍정 혹은 부정적인지에 대한 정보를 포함하고 있다.</figcaption></figure><figure id="7f2b6d6b-cc68-43f2-a689-948ad51b348c" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2013.png"><img style="width:1094px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2013.png"/></a><figcaption>Embedded Word는 각 상황과의 관계를 표현하는데 적합하다.</figcaption></figure><p id="3856283f-8dd8-44d5-9f22-decd4aa67752" class="">
+</p><h3 id="a293b751-173e-4ce4-b603-03da8b7eb6dd" class="">GloVe</h3><p id="0cb77b2e-d21c-4a76-ae62-23315db93c95" class="">GloVe는 문장 내에서 단어가 몇 번 등장했는지 미리 파악해두고, 이를 계산하는 방식을 가진다. GloVe의 목적함수는 <strong>입출력 쌍의 단어가 몇 번 등장</strong>했는지를 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span></span><span>﻿</span></span>를 씌워 값으로 가지고 있고, 이 값에 근사하는 형태로 표현된다. Word2Vec에서는 반복적으로 수행되었어야 할 계산이 단순화 되는 장점이 있다.</p><figure id="14b61754-a25a-4f7f-856a-f87bb9c10198" class="image"><a href="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2014.png"><img style="width:1094px" src="%5BDay%2016%5D%20NLP%20I%20939defac81fa4375ad79d4040e27dbcd/Untitled%2014.png"/></a><figcaption>GloVe는 추천 시스템 등에서 자주 활용되며, 적은 데이터에서도 잘 작동하는 특징이 있다.</figcaption></figure><p id="cc6996d3-d52e-4485-b5a9-fe856ec640bd" class="">
+</p><h3 id="f4cd5b45-6429-4f1b-801f-bea04e38664b" class="">실습</h3><figure id="846634e6-100e-4a72-8aea-a9392cf20fd6"><a href="https://github.com/LeeHyeonKyu/Naver-Boostcamp-AI-Tech/blob/main/Daily-Learning-Cleanup/210215_word2vec.ipynb" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">LeeHyeonKyu/Naver-Boostcamp-AI-Tech</div><div class="bookmark-description">네이버 부스트캠프 AI Tech에 참여한 내용입니다. Contribute to LeeHyeonKyu/Naver-Boostcamp-AI-Tech development by creating an account on GitHub.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/LeeHyeonKyu/Naver-Boostcamp-AI-Tech/blob/main/Daily-Learning-Cleanup/210215_word2vec.ipynb</div></div><img src="https://avatars.githubusercontent.com/u/72373733?s=400&amp;v=4" class="bookmark-image"/></a></figure><p id="9d742a95-5797-4e8a-8dc7-2747ed21c55b" class="">
+</p><hr id="0003f06c-dd46-43ee-8e2b-f5e51ad21484"/><h2 id="e3a39582-6ff0-40d2-9599-000ddfd18508" class="">Reference</h2><figure id="6fa52fc0-9df8-4494-80c9-278230106ea8"><a href="https://arxiv.org/abs/1310.4546" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Distributed Representations of Words and Phrases and their Compositionality</div><div class="bookmark-description">The recently introduced continuous Skip-gram model is an efficient method for learning high-quality distributed vector representations that capture a large number of precise syntactic and semantic word relationships. In this paper we present several extensions that improve both the quality of the vectors and the training speed.</div></div><div class="bookmark-href"><img src="https://static.arxiv.org/static/browse/0.3.2.6/images/icons/favicon.ico" class="icon bookmark-icon"/>https://arxiv.org/abs/1310.4546</div></div></a><figcaption>Word2Vec 공식 논문</figcaption></figure><figure id="7717ba4e-4635-4a05-9b9e-4356f014bb28"><a href="https://www.aclweb.org/anthology/D14-1162/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GloVe: Global Vectors for Word Representation</div><div class="bookmark-description">Jeffrey Pennington, Richard Socher, Christopher Manning. Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP). 2014.</div></div><div class="bookmark-href"><img src="https://www.aclweb.org/anthology/aclicon.ico" class="icon bookmark-icon"/>https://www.aclweb.org/anthology/D14-1162/</div></div><img src="https://www.aclweb.org/anthology/thumb/D14-1162.jpg" class="bookmark-image"/></a><figcaption>GloVe 공식 논문</figcaption></figure><figure id="10708b1e-6461-4ff1-9e02-15fd5348da23"><a href="https://ronxin.github.io/wevi/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">wevi</div><div class="bookmark-description">Everything you need to know about this tool - Source code</div></div><div class="bookmark-href">https://ronxin.github.io/wevi/</div></div></a><figcaption>Word2Vec Word Embedding Example</figcaption></figure><figure id="b8aa1e59-b2d6-4410-8dcb-db4f040182ce"><a href="https://word2vec.kr/search/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Korean Word2Vec</div><div class="bookmark-description">이곳은 단어의 효율적인 의미 추정 기법( Word2Vec 알고리즘)을 우리말에 적용해 본 실험 공간입니다. Word2Vec 알고리즘은 인공 신경망을 생성해 각각의 한국어 형태소를 1,000차원의 벡터 스페이스 상에 하나씩 매핑시킵니다. 그러면 비슷한 맥락을 갖는 단어들은 가까운 벡터를 지니게 되며, 벡터끼리 시맨틱 연산도 수행할 수 있습니다. 이는 분산 시맨틱스 가정 에 기초하고 있습니다.</div></div><div class="bookmark-href">https://word2vec.kr/search/</div></div></a><figcaption>Embedded Word Relationship Example</figcaption></figure><p id="43f93dd6-2c3a-49e4-9f1b-56c51649cb35" class="">
+</p></div></article></body></html>
